@@ -1,2 +1,2 @@
 # good-luck-btc
-Check Balance and Get PVKHEX
+Criar o HEX from palavras e Checar o Balance (Addresses cronologicamente usados)
