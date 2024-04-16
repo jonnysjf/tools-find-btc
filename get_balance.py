@@ -1,0 +1,39 @@
+import requests
+import json
+from json.decoder import JSONDecodeError
+from colorama import init, Fore, Back, Style
+init()
+
+SATOSHIS_PER_BTC = 1e+8
+addr = []
+YELLOW = Fore.LIGHTYELLOW_EX
+BLUE = Fore.LIGHTBLUE_EX
+CYAN = Fore.LIGHTCYAN_EX
+GREEN = Fore.LIGHTGREEN_EX
+RESET = Fore.RESET
+
+#CHECA O SALDO DE ACORDO COM A LISTA DE ENDEREÇOS CRIADAS
+def get_balance_list(list_address,filename_save):
+    found = 0
+    found_line = 0
+    with open(filename_save,'a') as f_save:
+        for i,line in enumerate(list_address):
+            separador = line.split('/')
+            addr = separador[0]
+            hex = separador[1]
+            response=requests.get('https://chainflyer.bitflyer.jp/v1/address/' + str.strip(addr))
+            response.raise_for_status()
+            if (response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json")):
+                try:
+                    j_line = json.loads(response.text)
+                    saldo = (j_line['confirmed_balance'])/SATOSHIS_PER_BTC
+                    print(f'{i} - {CYAN + addr + RESET} {GREEN + str(saldo) + RESET} {YELLOW + hex + RESET} Found :{found} Lines :{found_line}')
+                    #verificar a saida dos hex para poder salvar no arquivo
+                    if saldo >= 0.0001:
+                        f_save.write(f'{i} - {addr}/{saldo}/{hex}\n')
+                        found = found + 1
+                        found_line = (f'{found_line}, {i}')
+                    else:
+                        pass
+                except JSONDecodeError as e:
+                    pass
