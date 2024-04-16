@@ -11,7 +11,7 @@ from set_address import set_list_address
 SATOSHIS_PER_BTC = 1e+8
 list_origem = []
 
-#CRIA SEQUENCIA FIBONACCI DE ACORDO COM NÚMEROS DE CARACTERES DIGITADOS
+#CRIA SEQUENCIA FIBONACCI DE ACORDO COM NÚMEROS DE CARACTERES
 def seq_fibonacci(n_termos,file_save,value):
     num1 = 0
     num2 = 1
