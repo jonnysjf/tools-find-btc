@@ -1,16 +1,10 @@
 import requests
 import json
 from json.decoder import JSONDecodeError
-from colorama import init, Fore, Back, Style
-init()
+import estilos as es
 
 SATOSHIS_PER_BTC = 1e+8
 addr = []
-YELLOW = Fore.LIGHTYELLOW_EX
-BLUE = Fore.LIGHTBLUE_EX
-CYAN = Fore.LIGHTCYAN_EX
-GREEN = Fore.LIGHTGREEN_EX
-RESET = Fore.RESET
 
 #CHECA O SALDO DE ACORDO COM A LISTA DE ENDEREÇOS CRIADAS
 def get_balance_list(list_address,filename_save):
@@ -27,7 +21,7 @@ def get_balance_list(list_address,filename_save):
                 try:
                     j_line = json.loads(response.text)
                     saldo = (j_line['confirmed_balance'])/SATOSHIS_PER_BTC
-                    print(f'{i} - {CYAN + addr + RESET} {GREEN + str(saldo) + RESET} {YELLOW + hex + RESET} Found :{found} Lines :{found_line}')
+                    print(f'{i} - {es.CYAN + addr + es.RESET} {es.GREEN + str(saldo) + es.RESET} {es.YELLOW + hex + es.RESET} Found :{found} Lines :{found_line}')
                     #verificar a saida dos hex para poder salvar no arquivo
                     if saldo >= 0.0001:
                         f_save.write(f'{i} - {addr}/{saldo}/{hex}\n')
