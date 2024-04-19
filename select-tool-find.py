@@ -7,7 +7,6 @@ from itertools import starmap
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
-from runner-tools import option
    
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def main():

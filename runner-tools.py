@@ -76,7 +76,7 @@ def option(value):
           n_file_save = (f'Resultado_Fibonacci_{n_termos}.tsv')
           seq_fibonacci(n_termos,n_file_save,value)
      elif value == 2:
-          print(str.upper('Sequencia de Datas'))
+          print(str.upper('Sequencia de Data'))
           seq_datas(value)
      elif value == 3:
           print(str.upper('Sequencia de Palavras'))
