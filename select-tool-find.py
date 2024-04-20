@@ -7,15 +7,15 @@ from itertools import starmap
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
-from good_luck import main as main_goodluck
+from good_luck import mainGoodLuck as mgl
 import estilos as es
 
 
 #MENU DE OPÇÕES
-def select(value):
+def select():
      if value == 1:
           print(es.YELLOW + str.upper('modo good luck! selecionado !') + es.RESET)
-          main_goodluck()
+          mgl()
      elif value == 2:
           print(str.upper('Sequencia de Data'))
           

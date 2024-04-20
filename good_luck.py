@@ -67,7 +67,7 @@ def get_img(file,n_file_save,value):
         set_list_address(bytes,n_file_save,value)    
 
 #MENU DE OPÇÕES
-def option(value):
+def opt_select(value):
      if value == 1:
           print(str.upper('Sequencia Fibonacci'))
           n_termos = int(input('Quantidade de termos :'))
@@ -78,8 +78,8 @@ def option(value):
           seq_datas(value)
      elif value == 3:
           print(str.upper('Sequencia de Palavras'))
-          option = int(input("[1] Carregar arquivo \n[2] Digitar textoSair \n: "))
-          op_type_text(option,value)
+          op = int(input("[1] Carregar arquivo \n[2] Digitar textoSair \n: "))
+          op_type_text(op,value)
      elif value == 4:
           print(str.upper('Imagens'))
           filename = input("Local da imagens : ")
@@ -89,8 +89,5 @@ def option(value):
           print('Nenhuma opção selecionada')
           main()
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
-def main():
-      option(int(input("[1] sequência fibonacci \n[2] sequência de datas \n[3] sequência de palavras\n[4] imagens \n[0] Voltar \n: ")))  
-
-if __name__ == '__main__':
-	main()
+def mainGoodLuck():
+      opt_select(int(input("[1] sequência fibonacci \n[2] sequência de datas \n[3] sequência de palavras\n[4] imagens \n[0] Voltar \n: ")))  
