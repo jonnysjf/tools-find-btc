@@ -90,4 +90,5 @@ def opt_select(value):
           main()
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def mainGoodLuck():
+     
       opt_select(int(input("[1] sequência fibonacci \n[2] sequência de datas \n[3] sequência de palavras\n[4] imagens \n[0] Voltar \n: ")))  

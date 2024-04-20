@@ -12,7 +12,7 @@ import estilos as es
 
 
 #MENU DE OPÇÕES
-def select():
+def select(value):
      if value == 1:
           print(es.YELLOW + str.upper('modo good luck! selecionado !') + es.RESET)
           mgl()
