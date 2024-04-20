@@ -56,7 +56,7 @@ def op_type_text(option,value):
                     palavra.append(addr)  
      else:
           value = 1
-          palavra = input(str(input('Digite a palavra / texto :')))
+          palavra = str(input('Digite a palavra / texto :'))
           n_file_save = (f'Resultados_word_{palavra}.tsv')
 
      set_list_address(palavra,n_file_save,value) 
