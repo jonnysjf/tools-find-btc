@@ -24,6 +24,6 @@ def info_partition():
       file_list = input("Entre com endereço do file_list :  ")
       inicio = input("Entre com linha inicial :  ")
       final = input("Entre com linha final :  ")
-      file_result = (f'{inicio}_{final}.tsv')
+      file_result = (f'../list/{inicio}_{final}.tsv')
       print(file_list)
       read_file(file_list,inicio,final,file_result)
