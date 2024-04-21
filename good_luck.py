@@ -5,7 +5,6 @@ from itertools import starmap
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
-from select_tool_find import main
 
 SATOSHIS_PER_BTC = 1e+8
 list_origem = []
@@ -88,7 +87,7 @@ def opt_select(value):
           get_img(filename,n_file_save,value)   
      else:
           print('Nenhuma opção selecionada')
-          main()
+          mainGoodLuck()
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def mainGoodLuck():
      
