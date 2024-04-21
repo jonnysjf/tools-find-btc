@@ -9,7 +9,7 @@ import pandas as pd
 from set_address import set_list_address
 from good_luck import mainGoodLuck as mgl
 import estilos as es
-
+from partition_list import info_partition
 
 #MENU DE OPÇÕES
 def select(value):
@@ -20,8 +20,8 @@ def select(value):
           print(str.upper('Sequencia de Data'))
           
      elif value == 3:
-          print(str.upper('Sequencia de Palavras'))
-          option = int(input("[1] Carregar arquivo \n[2] Digitar textoSair \n: "))
+          print(es.BLUE + str.upper('Particionar lista ') + es.RESET)
+          info_partition()
           
      elif value == 4:
           print(str.upper('Imagens'))
@@ -34,7 +34,7 @@ def select(value):
    
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def main():
-      select(int(input("[1] Good Luck! \n[2] Find Duplicidade \n[3] Extrair Addresses (100.000)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
+      select(int(input("[1] Good Luck! \n[2] Find Duplicidade \n[3] Partition List (100.000)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
 
 if __name__ == '__main__':
 	main()
