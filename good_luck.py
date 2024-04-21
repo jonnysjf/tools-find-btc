@@ -5,6 +5,7 @@ from itertools import starmap
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
+from select_tool_find import main
 
 SATOSHIS_PER_BTC = 1e+8
 list_origem = []
