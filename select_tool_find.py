@@ -10,7 +10,8 @@ from set_address import set_list_address
 from good_luck import mainGoodLuck as mgl
 import estilos as es
 from partition_list import info_partition
-from scan_balance_double_rsz import mainBalanceRSZ as mbrsz
+from chk_duplo_r_nozero import mainNoZero as mnz
+from chk_duplo_all import mainAll as mna
 
 #MENU DE OPÇÕES
 def select(value):
@@ -19,7 +20,9 @@ def select(value):
           mgl()
      elif value == 2:
           print(es.GREEN + str.upper('Find Assinaturas fracas') + es.RESET)
-          mbrsz()
+          op_type = int(input("[1] Address com balance  \n[2] All address \n[0] Sair \n: "))
+          mnz() if op_type == 1 else mna()
+
      elif value == 3:
           print(es.BLUE + str.upper('Particionar lista ') + es.RESET)
           info_partition()

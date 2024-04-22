@@ -6,9 +6,8 @@ import requests
 import argparse
 from urllib.request import urlopen
 from itertools import combinations
-import ./secp256k1 as ice
+from rsz import secp256k1 as ice
 SATOSHIS_PER_BTC = 1e+8
-
 
 G = ice.scalar_multiplication(1)
 N = ice.N
@@ -261,7 +260,7 @@ def get_rsz(list,pvt,fail,begin):
                     except JSONDecodeError as e:
                         pass
 print('Program Finished ...')
-def main():
+def mainNoZero():
       file_list = input("Entre con end. do file list com balance :  ")
       inicio = input("Entre com linha inicial :  ")
       file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
@@ -270,6 +269,3 @@ def main():
       print(file_fail)
       print(file_pvtkey)
       get_rsz(file_list,file_pvtkey,file_fail,inicio)     
-
-if __name__ == '__main__':
-	main()

