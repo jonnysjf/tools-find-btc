@@ -34,7 +34,7 @@ def select(value):
    
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def main():
-      select(int(input("[1] Good Luck! \n[2] Find Duplicidade \n[3] Partition List (100.000)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
+      select(int(input("[1] Good Luck! \n[2] Find Duplicidade \n[3] Segregar List (100.000 addresses)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
 
 if __name__ == '__main__':
 	main()
