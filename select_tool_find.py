@@ -10,6 +10,7 @@ from set_address import set_list_address
 from good_luck import mainGoodLuck as mgl
 import estilos as es
 from partition_list import info_partition
+from scan_balance_double_rsz import mainBalanceRSZ as mbrsz
 
 #MENU DE OPÇÕES
 def select(value):
@@ -17,8 +18,8 @@ def select(value):
           print(es.YELLOW + str.upper('modo good luck! selecionado !') + es.RESET)
           mgl()
      elif value == 2:
-          print(str.upper('Sequencia de Data'))
-          
+          print(es.GREEN + str.upper('Find Assinaturas fracas') + es.RESET)
+          mbrsz()
      elif value == 3:
           print(es.BLUE + str.upper('Particionar lista ') + es.RESET)
           info_partition()
@@ -34,7 +35,7 @@ def select(value):
    
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def main():
-      select(int(input("[1] Good Luck! \n[2] Find Duplicidade \n[3] Segregar List (100.000 addresses)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
+      select(int(input("[1] Good Luck! \n[2] Find Assinaturas fracas \n[3] Segregar List (100.000 addresses)\n[4] Compilar fail's excluindo repetidos \n[0] Sair \n: ")))  
 
 if __name__ == '__main__':
 	main()
