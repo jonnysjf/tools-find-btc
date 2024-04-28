@@ -9,7 +9,8 @@ from itertools import combinations
 from rsz import secp256k1 as ice
 import estilos as es
 SATOSHIS_PER_BTC = 1e+8
-
+file_name_cache = ''
+line_cache = 1
 G = ice.scalar_multiplication(1)
 N = ice.N
 ZERO = ice.Zero
@@ -182,6 +183,7 @@ def get_rsz(list,pvt,fail,begin):
             result_pvt = open(pvt, 'a')
             linha = linha + 1
             #result_pvt = open(pvt, 'a')
+            line_cache = linha
             if linha >= int(begin): 
                 address = str.strip(line)
                 response = requests.get('https://chainflyer.bitflyer.jp/v1/address/' + address)
@@ -263,12 +265,30 @@ def get_rsz(list,pvt,fail,begin):
                     except JSONDecodeError as e:
                         pass
 print('Program Finished ...')
+
+def novo():
+    file_list = input("Entre con end. do file list com balance :  ")
+    file_name_cache = file_list
+    inicio = input("Entre com linha inicial :  ")
+    file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
+    file_fail = (f'fail_{file_list}')
+    print(file_list)
+    print(file_fail)
+    print(file_pvtkey)
+    get_rsz(file_list,file_pvtkey,file_fail,inicio)
+
+def continuar():
+    file_list = file_name_cache
+    inicio = line_cache
+    file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
+    file_fail = (f'fail_{file_list}')
+    print(file_list)
+    print(file_fail)
+    print(file_pvtkey)
+    get_rsz(file_list,file_pvtkey,file_fail,inicio)
+
+
+
 def mainNoZero():
-      file_list = input("Entre con end. do file list com balance :  ")
-      inicio = input("Entre com linha inicial :  ")
-      file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
-      file_fail = (f'fail_{file_list}')
-      print(file_list)
-      print(file_fail)
-      print(file_pvtkey)
-      get_rsz(file_list,file_pvtkey,file_fail,inicio)     
+      select = int(input("[1] Novo  \n[2] Continuar \n[0] Sair \n: "))
+      novo() if select == 1 else continuar()
