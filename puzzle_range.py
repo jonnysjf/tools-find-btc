@@ -1,9 +1,19 @@
 import math
 from typing import final
 
+range_66_inicio = '20000000000000000'
+range_66_final = '3ffffffffffffffff'
+
+
 def getRange():
-    va_int_ini = int(input('Digite o hex inicial: '),16)
-    va_int_final = int(input('Digite o hex final: '),16)
+    select = input('Puzzle 66, y/n? ')
+    if select == 'y':
+        va_int_ini = int(range_66_inicio,16)
+        va_int_final = int(range_66_final,16)
+    else:
+        va_int_ini = int(input('Digite o hex inicial: '),16)
+        va_int_final = int(input('Digite o hex final: '),16)
+    
     range_int = va_int_final - va_int_ini
     percentual = float(input('Digite o inicio % desejada do range: '))
     range = int(input('Digite o tamanho desejado do range: '))
