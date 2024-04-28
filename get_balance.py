@@ -10,6 +10,7 @@ addr = []
 def get_balance_list(list_address,filename_save):
     found = 0
     found_line = 0
+    print(filename_save)
     with open(filename_save,'a') as f_save:
         for i,line in enumerate(list_address):
             separador = line.split('/')

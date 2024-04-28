@@ -81,7 +81,7 @@ def opt_select(value):
           op = int(input("[1] Carregar arquivo \n[2] Digitar textoSair \n: "))
           op_type_text(op,value)
      elif value == 4:
-          print(str.upper('Imagens'))
+          print(str.upper('Get hash de Imagem'))
           filename = input("Local da imagens : ")
           n_file_save = (f'Resultado_{filename}.tsv')
           get_img(filename,n_file_save,value)   
