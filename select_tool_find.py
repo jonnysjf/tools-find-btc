@@ -20,7 +20,7 @@ def select(value):
           mgl()
      elif value == 2:
           print(es.GREEN + str.upper('Find Assinaturas fracas') + es.RESET)
-          op_type = int(input("[1] Address com balance  \n[2] All address \n[0] Sair \n: "))
+          op_type = int(input("[1] Address com balance  \n[2] All address \n[3] Continuar \n[0] Sair \n: "))
           mnz() if op_type == 1 else mna()
 
      elif value == 3:

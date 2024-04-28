@@ -7,6 +7,7 @@ import argparse
 from urllib.request import urlopen
 from itertools import combinations
 from rsz import secp256k1 as ice
+import estilos as es
 SATOSHIS_PER_BTC = 1e+8
 
 G = ice.scalar_multiplication(1)
@@ -174,6 +175,8 @@ print('\nStarting Program...')
 
 def get_rsz(list,pvt,fail,begin):
     linha = 0
+    soma_balance = 0
+    total_encontrado = 0
     with open(list) as file:
         for line in file:
             result_pvt = open(pvt, 'a')
@@ -188,14 +191,13 @@ def get_rsz(list,pvt,fail,begin):
                         j_line = json.loads(response.text)
                         saldo = (float(j_line['confirmed_balance']))/SATOSHIS_PER_BTC
                         if saldo == 0.0:
-                            print(f'{linha} - {address} - {saldo}')
-                            
+                            print(f'{linha} - {address} - {saldo} \t [{es.CYAN}{soma_balance}{es.RESET} \t {es.GREEN}{total_encontrado}{es.RESET}]')
                             result_pvt.write(f'{linha} - {address} - {saldo}\n')
                             print('-'*120)
                             pass
                         else:
-                            print(f'{linha} - {address} - {saldo}')
-                            
+                            soma_balance = soma_balance + saldo
+                            print(f'{linha} - {address} - {saldo} \t [{es.CYAN}{soma_balance}{es.RESET} \t {es.GREEN}{total_encontrado}{es.RESET}]')
                             result_pvt.write(f'{linha} - {address} - {saldo}\n')
                             print('-'*120)
                             txid, cdx = check_tx(address,fail)
@@ -255,6 +257,7 @@ def get_rsz(list,pvt,fail,begin):
                                             d = getpvk(rL[i[0]], sL[i[0]], zL[i[0]], rL[i[1]], sL[i[1]], zL[i[1]], int( i[2], 16) )
                                             pvk = hex(d)
                                             print(f'Privatekey FOUND: {hex(d)}')
+                                            total_encontrado = total_encontrado + 1
                                             print('='*70); print('-'*120)
                                             result_pvt.write(f'PVK: {pvk} /ADDRESS: {address}\n')
                     except JSONDecodeError as e:
