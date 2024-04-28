@@ -272,37 +272,36 @@ print('Program Finished ...')
 def novo():
     #arquivos = listar_arquivos(caminho=os.path.dirname(os.path.realpath(__file__)))
     mypath = str(os.path.dirname(os.path.realpath(__file__)))
-    arq = glob.glob(mypath + '/*.tsv')
+    list_file = Path(mypath).glob("*.tsv")
+    list_file = sorted(list_file)
+    for i, file in enumerate(list_file):
+        print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
 
-    for i, file in enumerate(Path(mypath).glob("*.tsv")):
-        print(f'{i} - {file.name}')
-    file_list = input("Entre con end. do file list com balance :  ")
-    file_name_cache = file_list
-    inicio = input("Entre com linha inicial :  ")
+    indice = int(input("\nDigite o número referente ao aqruivo: "))
+    file_list = list_file[indice].name
+    inicio = 1
     file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
     file_fail = (f'fail_{file_list}')
-    print(file_list)
-    print(file_fail)
-    print(file_pvtkey)
+    print(f'File Select - {file_list} / Linha inicial {inicio}')
     get_rsz(file_list,file_pvtkey,file_fail,inicio)
-
-def listar_arquivos(caminho=None):
-    lista_arqs = [arq for arq in os.listdir(caminho)]
-    return lista_arqs
 
 def continuar():
-    file_list = file_name_cache
-    inicio = line_cache
-    print(file_list)
-    print(line_cache)
+    mypath = str(os.path.dirname(os.path.realpath(__file__)))
+    list_file = Path(mypath).glob("*.tsv")
+    list_file = sorted(list_file)
+    for i, file in enumerate(list_file):
+        print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
+
+    indice = int(input("\nDigite o número referente ao aqruivo: "))
+    file_list = str(list_file[indice].name)
     file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
     file_fail = (f'fail_{file_list}')
+    with open(file_pvtkey, "r") as f:
+        inicio = len(f.readlines())
+        print(inicio)
     print(file_list)
-    print(file_fail)
-    print(file_pvtkey)
+    print(f'File Select - {file_list} / Linha inicial {inicio}')
     get_rsz(file_list,file_pvtkey,file_fail,inicio)
-
-
 
 def mainNoZero():
       select = int(input("[1] Novo  \n[2] Continuar \n[0] Sair \n: "))

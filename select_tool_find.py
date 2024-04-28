@@ -1,11 +1,7 @@
 import hashlib
-from bit import Key
-from bit.format import bytes_to_wif
-import requests
 import json
 from itertools import starmap 
 from datetime import datetime, timedelta
-import pandas as pd
 from set_address import set_list_address
 from good_luck import mainGoodLuck as mgl
 import estilos as es
