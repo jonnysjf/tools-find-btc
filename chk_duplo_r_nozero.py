@@ -8,6 +8,9 @@ from urllib.request import urlopen
 from itertools import combinations
 from rsz import secp256k1 as ice
 import estilos as es
+import os
+import glob
+from pathlib import Path
 SATOSHIS_PER_BTC = 1e+8
 file_name_cache = ''
 line_cache = 1
@@ -267,6 +270,12 @@ def get_rsz(list,pvt,fail,begin):
 print('Program Finished ...')
 
 def novo():
+    #arquivos = listar_arquivos(caminho=os.path.dirname(os.path.realpath(__file__)))
+    mypath = str(os.path.dirname(os.path.realpath(__file__)))
+    arq = glob.glob(mypath + '/*.tsv')
+
+    for i, file in enumerate(Path(mypath).glob("*.tsv")):
+        print(f'{i} - {file.name}')
     file_list = input("Entre con end. do file list com balance :  ")
     file_name_cache = file_list
     inicio = input("Entre com linha inicial :  ")
@@ -277,9 +286,15 @@ def novo():
     print(file_pvtkey)
     get_rsz(file_list,file_pvtkey,file_fail,inicio)
 
+def listar_arquivos(caminho=None):
+    lista_arqs = [arq for arq in os.listdir(caminho)]
+    return lista_arqs
+
 def continuar():
     file_list = file_name_cache
     inicio = line_cache
+    print(file_list)
+    print(line_cache)
     file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
     file_fail = (f'fail_{file_list}')
     print(file_list)
