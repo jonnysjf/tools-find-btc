@@ -5,6 +5,10 @@ from itertools import starmap
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
+import estilos as es
+import os
+import glob
+from pathlib import Path
 
 SATOSHIS_PER_BTC = 1e+8
 list_origem = []
@@ -47,6 +51,14 @@ def seq_datas(value):
 def op_type_text(option,value):
      palavra = []
      if option == 1:
+          mypath = str(f'../list/{os.path.dirname(os.path.realpath(__file__))}')
+          list_file = Path(mypath).glob("*.tsv")
+          list_file = sorted(list_file)
+          for i, file in enumerate(list_file):
+               print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
+
+          indice = int(input("\nDigite o número referente ao aqruivo: "))
+          file_list = list_file[indice].name
           file_list = input('Insira o endereço da list :')
           n_file_save = (f'Resultado_{file_list}.tsv')
           value = 2
