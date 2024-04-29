@@ -1,3 +1,8 @@
+import estilos as es
+import os
+import glob
+from pathlib import Path
+
 
 def read_file(file_read,first,end,file_save):
     print(f'read file: {str.strip(file_read)} / range: {first} to {end} / save file: {file_save}')
@@ -21,9 +26,16 @@ def read_file(file_read,first,end,file_save):
                 #check_balance(address,file_balance)
 
 def info_partition():
-      file_list = input("Entre com endereço do file_list :  ")
-      inicio = input("Entre com linha inicial :  ")
-      final = input("Entre com linha final :  ")
-      file_result = (f'../list/{inicio}_{final}.tsv')
-      print(file_list)
-      read_file(file_list,inicio,final,file_result)
+        mypath = str(f'../list')
+        list_file = Path(mypath).glob("*.tsv")
+        list_file = sorted(list_file)
+        for i, file in enumerate(list_file):
+            print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
+
+        indice = int(input("\nDigite o número referente ao aqruivo: "))
+        file_list = str(f'../list/{list_file[indice].name}')
+        inicio = input("Entre com linha inicial :  ")
+        final = input("Entre com linha final :  ")
+        file_result = (f'../list/{inicio}_{final}.tsv')
+        print(file_list)
+        read_file(file_list,inicio,final,file_result)
