@@ -51,18 +51,21 @@ def seq_datas(value):
 def op_type_text(option,value):
      palavra = []
      if option == 1:
-          mypath = str(f'../list/{os.path.dirname(os.path.realpath(__file__))}')
+          mypath = '../list/'
           list_file = Path(mypath).glob("*.tsv")
           list_file = sorted(list_file)
+
           for i, file in enumerate(list_file):
                print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
 
           indice = int(input("\nDigite o número referente ao aqruivo: "))
           file_list = list_file[indice].name
-          file_list = input('Insira o endereço da list :')
+          print(file_list)
           n_file_save = (f'Resultado_{file_list}.tsv')
+          print(n_file_save)
           value = 2
-          with open(file_list) as file:
+          
+          with open(f'../list/{file_list}') as file:
                for line in file:
                     addr = str.strip(line)
                     palavra.append(addr)  
