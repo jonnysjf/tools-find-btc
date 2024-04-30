@@ -181,7 +181,7 @@ def get_rsz(list,pvt,fail,begin):
     linha = 0
     soma_balance = 0
     total_encontrado = 0
-    with open(list) as file:
+    with open(f'../list/{list}') as file:
         for line in file:
             result_pvt = open(pvt, 'a')
             linha = linha + 1
@@ -286,7 +286,7 @@ def novo():
     get_rsz(file_list,file_pvtkey,file_fail,inicio)
 
 def continuar():
-    mypath = str(os.path.dirname(os.path.realpath(__file__)))
+    mypath = '../list/'
     list_file = Path(mypath).glob("*.tsv")
     list_file = sorted(list_file)
     for i, file in enumerate(list_file):
@@ -296,7 +296,7 @@ def continuar():
     file_list = str(list_file[indice].name)
     file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
     file_fail = (f'fail_{file_list}')
-    with open(file_pvtkey, "r") as f:
+    with open(f'../list/{file_pvtkey}') as f:
         inicio = len(f.readlines())
         print(inicio)
     print(file_list)
