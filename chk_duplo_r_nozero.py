@@ -183,7 +183,7 @@ def get_rsz(list,pvt,fail,begin):
     total_encontrado = 0
     with open(f'../list/{list}') as file:
         for line in file:
-            result_pvt = open(pvt, 'a')
+            result_pvt = open(f'../list/{pvt}', 'a')
             linha = linha + 1
             #result_pvt = open(pvt, 'a')
             line_cache = linha
