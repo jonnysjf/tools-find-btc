@@ -270,8 +270,7 @@ def get_rsz(list,pvt,fail,begin):
 print('Program Finished ...')
 
 def novo():
-    #arquivos = listar_arquivos(caminho=os.path.dirname(os.path.realpath(__file__)))
-    mypath = str(os.path.dirname(os.path.realpath(__file__)))
+    mypath = '../list/'
     list_file = Path(mypath).glob("*.tsv")
     list_file = sorted(list_file)
     for i, file in enumerate(list_file):
