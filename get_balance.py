@@ -10,11 +10,12 @@ addr = []
 def get_balance_list(list_address,filename_save):
     found = 0
     found_line = 0
-    print(filename_save)
+    filename_save = str(f'../list/{filename_save}')
     with open(filename_save,'a') as f_save:
         for i,line in enumerate(list_address):
             separador = line.split('/')
             addr = separador[0]
+            print(addr)
             hex = separador[1]
             response=requests.get('https://chainflyer.bitflyer.jp/v1/address/' + str.strip(addr))
             response.raise_for_status()
