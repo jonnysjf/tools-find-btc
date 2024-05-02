@@ -22,13 +22,16 @@ def select(value):
      elif value == 5:
           print(es.BLUE + str.upper('get range puzzle chalenger ') + es.RESET)
           getRange()
+     elif value == 6:
+          print(es.BLUE + str.upper('check balance from list address ') + es.RESET)
+          getRange()
      else:
           print('Nenhuma opção selecionada')
           main()
    
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def main():
-      select(int(input("[1] Good Luck! \n[2] Find Assinaturas fracas \n[3] Segregar List (100.000 addresses)\n[4] Compilar fail's excluindo repetidos \n[5] Get range for puzzle \n[0] Sair \n: ")))  
+      select(int(input("[1] Good Luck! \n[2] Find Assinaturas fracas \n[3] Segregar List (100.000 addresses)\n[4] Compilar fail's excluindo repetidos \n[5] Get range for puzzle \n[6] Check balance from file \n[0] Sair \n: ")))  
 
 if __name__ == '__main__':
 	main()
