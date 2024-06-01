@@ -14,11 +14,12 @@ noticia = site.find('div', attrs={'class': 'mw-content-ltr mw-parser-output'})
 # Título
 titulo = noticia.find('ul')
 
+print(titulo.find_all('li')[0]('a'))
+
 #mw-content-text > div.mw-content-ltr.mw-parser-output
 
 # Subtítulo: div class="feed-post-body-resumo"
-for name in titulo:
-    print(name.text)
+##    print(name.find_all('a')[0].text)
 #subtitulo = titulo.find('a')
 
 
