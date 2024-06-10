@@ -38,7 +38,8 @@ def seq_number(value):
 
      permutacao = itertools.permutations(algarismos, r = quantdigitos)
      n_file_save = str(f'Combinações {algarismos}.tsv')
-     for number in permutacao:
+     for i, number in enumerate(permutacao):
+          print(i)
           line = ''.join(number)
           list_number.append(line)
 
