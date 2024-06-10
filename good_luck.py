@@ -1,7 +1,7 @@
 import hashlib
 from bit import Key
 from bit.format import bytes_to_wif
-from itertools import starmap 
+import itertools
 from datetime import datetime, timedelta
 import pandas as pd
 from set_address import set_list_address
@@ -30,6 +30,19 @@ def seq_fibonacci(n_termos,file_save,value):
     for z in list_origem:
          word = word + str(z)
     set_list_address(word,file_save,value)
+
+def seq_number(value):
+     list_number = []
+     quantdigitos = int(input('Digite a quantidade digitos :'))
+     algarismos = str(input('Digite os algarismos separados por virgula :'))
+
+     permutacao = itertools.permutations(algarismos, r = quantdigitos)
+     n_file_save = str(f'Combinações {algarismos}.tsv')
+     for number in permutacao:
+          line = ''.join(number)
+          list_number.append(line)
+
+     set_list_address(list_number,n_file_save,value)
 
 #CRIA UMA LISTA DE DATAS CONFORME RANGE DEFINIDO
 def seq_datas(value):
@@ -72,7 +85,7 @@ def op_type_text(option,value):
      else:
           value = 1
           palavra = str(input('Digite a palavra / texto :'))
-          n_file_save = (f'Resultados_word_{palavra}.tsv')
+          n_file_save = (f'Resultados_word_{palavra[:5]}.tsv')
 
      set_list_address(palavra,n_file_save,value) 
 
@@ -99,11 +112,15 @@ def opt_select(value):
           print(str.upper('Get hash de Imagem'))
           filename = input("Local da imagens : ")
           n_file_save = (f'Resultado_{filename}.tsv')
-          get_img(filename,n_file_save,value)   
+          get_img(filename,n_file_save,value)
+     elif value == 5:
+          print(str.upper('Sequencia de Números'))
+          op = int(input("[1] Permutação \n[2] Arranjo \n: "))
+          seq_number(value)
      else:
           print('Nenhuma opção selecionada')
           mainGoodLuck()
 #APRESENTAÇÃO DO MENU PARA ESCOLHA     
 def mainGoodLuck():
      
-      opt_select(int(input("[1] sequência fibonacci \n[2] sequência de datas \n[3] sequência de palavras\n[4] imagens \n[0] Voltar \n: ")))  
+      opt_select(int(input("[1] sequência fibonacci \n[2] sequência de datas \n[3] sequência de palavras\n[4] imagens\n[5] Permutação e Arranjo  \n[0] Voltar \n: ")))  
