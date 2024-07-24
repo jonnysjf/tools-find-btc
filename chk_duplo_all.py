@@ -7,6 +7,8 @@ import argparse
 from urllib.request import urlopen
 from itertools import combinations
 from rsz import secp256k1 as ice
+from pathlib import Path
+import estilos as es
 SATOSHIS_PER_BTC = 1e+8
 
 G = ice.scalar_multiplication(1)
@@ -174,9 +176,9 @@ print('\nStarting Program...')
 
 def get_rsz(list,pvt,fail,begin):
     linha = 0
-    with open(list) as file:
+    with open(f'../list/{list}') as file:
         for line in file:
-            result_pvt = open(pvt, 'a')
+            result_pvt = open(f'../list/{pvt}', 'a')
             linha = linha + 1
             #result_pvt = open(pvt, 'a')
             if linha >= int(begin): 
@@ -252,12 +254,40 @@ def get_rsz(list,pvt,fail,begin):
                     except JSONDecodeError as e:
                         pass
 print('Program Finished ...')
+
+def novo():
+    mypath = '../list/'
+    list_file = Path(mypath).glob("*.tsv")
+    list_file = sorted(list_file)
+    for i, file in enumerate(list_file):
+        print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
+
+    indice = int(input("\nDigite o número referente ao aqruivo: "))
+    file_list = list_file[indice].name
+    inicio = 1
+    file_pvtkey = (f'pvtkey_All_{file_list}')
+    file_fail = (f'fail_All_{file_list}')
+    print(f'File Select - {file_list} / Linha inicial {inicio}')
+    get_rsz(file_list,file_pvtkey,file_fail,inicio)
+
+def continuar():
+    mypath = '../list/'
+    list_file = Path(mypath).glob("*.tsv")
+    list_file = sorted(list_file)
+    for i, file in enumerate(list_file):
+        print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
+
+    indice = int(input("\nDigite o número referente ao aqruivo: "))
+    file_list = str(list_file[indice].name)
+    file_pvtkey = (f'pvtkey_All_{file_list}')
+    file_fail = (f'fail_All_{file_list}')
+    with open(f'../list/{file_pvtkey}') as f:
+        inicio = len(f.readlines())
+        print(inicio)
+    print(file_list)
+    print(f'File Select - {file_list} / Linha inicial {inicio}')
+    get_rsz(file_list,file_pvtkey,file_fail,inicio)
+
 def mainAll():
-      file_list = input("Entre con end. do file list com balance :  ")
-      inicio = input("Entre com linha inicial :  ")
-      file_pvtkey = (f'pvtkey_No_Zero_{file_list}')
-      file_fail = (f'fail_{file_list}')
-      print(file_list)
-      print(file_fail)
-      print(file_pvtkey)
-      get_rsz(file_list,file_pvtkey,file_fail,inicio)     
+    select = int(input("[1] Novo  \n[2] Continuar \n[0] Sair \n: "))
+    novo() if select == 1 else continuar() 
