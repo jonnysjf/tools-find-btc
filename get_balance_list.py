@@ -8,7 +8,6 @@ from pathlib import Path
 SATOSHIS_PER_BTC = 1e+8
 addr = []
 token = 12345678901234567890123456789012
-
 #CHECA O SALDO DE ACORDO COM A LISTA DE ENDEREÇOS CRIADAS
 def get_balance_list(file_list):
     found = 0
@@ -21,9 +20,9 @@ def get_balance_list(file_list):
             addr = line.strip('\n')
             print(addr)
             print(line)
-            #response=requests.get('https://chainflyer.bitflyer.jp/v1/address/' + str.strip(addr))
-            response=requests.get(f'https://coinb.in/api/?uid=1&key={token}&setmodule=addresses&request=bal&address={str.strip(addr)}')
-            j_line = json.loads(json.dumps(xmltodict.parse(response.content), indent=4))
+            response=requests.get('https://chainflyer.bitflyer.jp/v1/address/' + str.strip(addr))
+            #response=requests.get(f'https://coinb.in/api/?uid=1&key={token}&setmodule=addresses&request=bal&address={str.strip(addr)}')
+            #j_line = json.loads(json.dumps(xmltodict.parse(response.content), indent=4))
             response.raise_for_status()
             if (response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json")):
                 try:

@@ -11,6 +11,8 @@ import estilos as es
 import os
 import glob
 from pathlib import Path
+import xml.etree.ElementTree as ET
+token = 12345678901234567890123456789012
 SATOSHIS_PER_BTC = 1e+8
 file_name_cache = ''
 line_cache = 1
@@ -190,6 +192,7 @@ def get_rsz(list,pvt,fail,begin):
             if linha >= int(begin): 
                 address = str.strip(line)
                 response = requests.get('https://chainflyer.bitflyer.jp/v1/address/' + address)
+
                 response.raise_for_status()
                 if (response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json")):
                     try:

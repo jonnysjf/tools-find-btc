@@ -278,7 +278,7 @@ def continuar():
         print(f'[{i}]\t{es.CYAN}{file.name}{es.RESET}')
 
     indice = int(input("\nDigite o número referente ao aqruivo: "))
-    file_list = str(list_file[indice].name)
+    file_list = list_file[indice].name
     file_pvtkey = (f'pvtkey_All_{file_list}')
     file_fail = (f'fail_All_{file_list}')
     with open(f'../list/{file_pvtkey}') as f:
